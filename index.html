@@ -501,24 +501,54 @@
                         </div>
 
                         <!-- Danh sách từng dòng Proxy -->
-                        <div class="divide-y divide-slate-100 max-h-80 overflow-y-auto">
-                            ${file.sanitizedLines.map((line, idx) => `
-                                <div class="px-4 sm:px-5 py-3 hover:bg-slate-50 transition-colors flex items-center justify-between gap-2.5 group">
-                                    <div class="flex items-center gap-2 min-w-0 flex-1">
-                                        <span class="text-xs font-mono text-slate-400 w-4 shrink-0">${idx + 1}.</span>
-                                        <code class="text-xs font-mono text-slate-700 truncate select-all bg-slate-100 px-2.5 py-1.5 rounded-lg border border-slate-200/60 w-full">
-                                            ${line}
-                                        </code>
+                        <div class="divide-y divide-slate-100 max-h-96 overflow-y-auto">
+                            ${file.sanitizedLines.map((line, idx) => {
+                                const withoutScheme = line.replace(/^socks5:\/\//, '');
+                                const colonIndex = withoutScheme.indexOf(':');
+                                const hostPart = colonIndex !== -1 ? withoutScheme.slice(0, colonIndex) : withoutScheme;
+                                const passPart = colonIndex !== -1 ? withoutScheme.slice(colonIndex + 1) : '';
+                                return `
+                                <div class="px-4 sm:px-5 py-3.5 hover:bg-slate-50/80 transition-colors flex flex-col gap-2">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="text-xs font-bold text-slate-500">Proxy #${idx + 1}</span>
+                                        <button onclick="copyText('${line}', 'Đã sao chép cả dòng Proxy #${idx + 1}!')" 
+                                            class="text-[11px] font-medium text-slate-400 hover:text-indigo-600 transition-colors">
+                                            Sao chép cả dòng
+                                        </button>
                                     </div>
-                                    <button onclick="copyText('${line}', 'Đã sao chép dòng Proxy #${idx + 1}!')" 
-                                        title="Sao chép dòng này"
-                                        class="p-2.5 text-indigo-600 bg-indigo-50/70 sm:bg-transparent sm:text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 active:scale-90 rounded-xl transition-all shrink-0">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                        </svg>
-                                    </button>
+                                    
+                                    <!-- Phần 1: Host -->
+                                    <div class="flex items-center justify-between gap-2 bg-slate-100/80 px-3 py-2 rounded-xl border border-slate-200/70">
+                                        <div class="min-w-0 flex-1">
+                                            <span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">Host / Máy chủ</span>
+                                            <code class="block text-xs font-mono text-slate-800 truncate select-all">${hostPart}</code>
+                                        </div>
+                                        <button onclick="copyText('${hostPart}', 'Đã sao chép Host (#${idx + 1})!')" 
+                                            class="px-3 py-2 bg-white hover:bg-indigo-50 active:scale-95 text-indigo-600 border border-indigo-200 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 shrink-0 shadow-2xs">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <span>Copy Host</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Phần 2: Password / Session -->
+                                    <div class="flex items-center justify-between gap-2 bg-slate-100/80 px-3 py-2 rounded-xl border border-slate-200/70">
+                                        <div class="min-w-0 flex-1">
+                                            <span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">Mật khẩu / Session</span>
+                                            <code class="block text-xs font-mono text-slate-800 truncate select-all">${passPart}</code>
+                                        </div>
+                                        <button onclick="copyText('${passPart}', 'Đã sao chép Mật khẩu (#${idx + 1})!')" 
+                                            class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 shrink-0 shadow-2xs">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <span>Copy Pass</span>
+                                        </button>
+                                    </div>
                                 </div>
-                            `).join('')}
+                                `;
+                            }).join('')}
                         </div>
                     </div>
                 `;

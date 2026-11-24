@@ -1147,6 +1147,38 @@
                     ["300.1 Khobar 13.6", "+966503894849"],
                     ["AM Khobar 300.23.5", "+966500797897"]
                 ])
+            },
+            {
+                id: 'vcf-contacts-riyadh',
+                fileName: 'contacts.vcf',
+                tag: 'Riyadh',
+                content: buildVcfContent([
+                    [". Riyadh 250.20.5", "+966500440211"],
+                    ["200.1 Riyadh 11.6", "+966538347709"],
+                    ["200.1 Riyadh 24.4", "+966559934441"],
+                    ["200.1 Riyadh 7.6", "+966592798916"],
+                    ["200.1 Riyadh 6.5", "+966559966494"],
+                    ["200.1 Riyadh 29.4", "+966574576385"],
+                    ["200.1 Riyadh 18.5", "+966539241332"],
+                    ["200.1 Riyadh 6.5", "+201069643004"],
+                    ["200.1 Riyadh 1.6", "+966552634797", "Car"],
+                    ["200.1 Riyadh 27.5", "+966505205304"],
+                    ["200.1 Riyadh 2.5", "+966566257245"],
+                    ["200.1 Riyadh 9.5", "+966547789800"],
+                    ["200.1 Riyadh 7.5", "+96594104559"],
+                    ["250.1 Riyadh 6.5", "+966534800011"],
+                    ["250.1 Riyadh 23.5", "+966506556548"],
+                    ["500.1 Nga Riyadh 6.6", "+966535856131"],
+                    ["700.1 Outcall Riyadh 19.5", "+966507230596"],
+                    ["Mza6.4 200 Riyadh", "+966506937462"],
+                    ["Khalid 250 .10.5 Riyadh", "+966559484278"],
+                    ["200 Không Chụp Mặt 13.5 Riyadh", "+966556974958"],
+                    ["ابو ادم Riyadh 200.17.5", "+966549391007"],
+                    ["استغفرالله Riyadh 10.5 200", "+966557009132"],
+                    ["سبحان الله والحمد لله Kèo Ngoài Riyadh 28/4", "+966555103499"],
+                    ["‏شركة ابو فارس 250 Riyadh 24/4", "+966531812801", "‏شركة ابو فارس"],
+                    ["نشاط Riyadh 200.7.6", "+966577593153", "نشاط"]
+                ])
             }
         ];
 
@@ -1241,6 +1273,7 @@
         function getContactCity(tag) {
             if (tag.startsWith('Buraydah')) return 'Buraydah';
             if (tag.startsWith('Jeddah')) return 'Jeddah';
+            if (tag.startsWith('Riyadh')) return 'Riyadh';
             if (tag.startsWith('Dammam')) return 'Dammam';
             if (tag.startsWith('Hofuf')) return 'Hofuf';
             if (tag.startsWith('Khobar')) return 'Khobar';
@@ -1259,7 +1292,7 @@
             const parts = [];
 
             if (mode === 'CITY') {
-                const cityOrder = ['Buraydah', 'Jeddah', 'Dammam', 'Hofuf', 'Khobar'];
+                const cityOrder = ['Buraydah', 'Jeddah', 'Riyadh', 'Dammam', 'Hofuf', 'Khobar'];
                 const cityGroups = {};
                 const seenPhonesByCity = {};
 
